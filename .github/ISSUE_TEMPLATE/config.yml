@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions, ideas and jev eval results
+    url: https://github.com/Dinesh-Sunny/jev-tokensaver/discussions
+    about: Ask and share in Discussions
+  - name: Security vulnerability
+    url: https://github.com/Dinesh-Sunny/jev-tokensaver/security/advisories/new
+    about: Please report security issues privately

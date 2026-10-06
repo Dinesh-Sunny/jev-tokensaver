@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-labelledby="t d">
+  <title id="t">jev prune example</title>
+  <desc id="d">Illustrative terminal output: jev prune reduces 2,318 lines of test output to the 41 lines that explain the failures, and saves the full log to disk.</desc>
+  <rect width="1280" height="560" rx="16" fill="#0b1020"/>
+  <rect width="1280" height="44" rx="16" fill="#1f2937"/><rect y="28" width="1280" height="16" fill="#1f2937"/>
+  <circle cx="30" cy="22" r="7" fill="#f87171"/><circle cx="54" cy="22" r="7" fill="#fbbf24"/><circle cx="78" cy="22" r="7" fill="#34d399"/>
+  <text x="640" y="28" text-anchor="middle" font-family="ui-sans-serif,-apple-system,Helvetica,Arial,sans-serif" font-size="15" fill="#9ca3af">Claude runs this for you - illustrative example</text>
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="18" xml:space="preserve">
+    <text x="32" y="88" fill="#e5e7eb"><tspan fill="#34d399">$</tspan> set -o pipefail; npm test 2&gt;&amp;1 | jev prune <tspan fill="#fbbf24">"which tests failed and why"</tspan></text>
+    <text x="32" y="128" fill="#9ca3af">&gt; app@1.4.0 test</text>
+    <text x="32" y="154" fill="#6b7280">   ... 698 lines omitted ...</text>
+    <text x="32" y="180" fill="#f87171">FAIL src/billing/invoice.test.ts › applies VAT once</text>
+    <text x="32" y="206" fill="#e5e7eb">  Expected: 120.00   Received: 144.00</text>
+    <text x="32" y="232" fill="#e5e7eb">    at addVat (src/billing/invoice.ts:212:18)</text>
+    <text x="32" y="258" fill="#6b7280">   ... 1,402 lines omitted ...</text>
+    <text x="32" y="284" fill="#f87171">FAIL src/api/webhooks/stripe.test.ts › rejects bad signature</text>
+    <text x="32" y="310" fill="#e5e7eb">  TypeError: Cannot read properties of undefined (reading 'secret')</text>
+    <text x="32" y="336" fill="#6b7280">   ... 174 lines omitted ...</text>
+    <text x="32" y="362" fill="#e5e7eb">Tests: <tspan fill="#f87171">2 failed</tspan>, <tspan fill="#34d399">611 passed</tspan>, 613 total</text>
+    <text x="32" y="402" fill="#a78bfa">[jev prune: showing 41 of 2,318 lines. Full output: ~/.cache/jev/prune/prune-…log - read it if something seems missing.]</text>
+    <text x="32" y="428" fill="#a78bfa">[jev id=12 · $0.00031 · ~18.9k tokens saved]</text>
+  </g>
+  <rect x="32" y="462" width="1216" height="64" rx="10" fill="#111827" stroke="#374151"/>
+  <text x="56" y="501" font-family="ui-sans-serif,-apple-system,Helvetica,Arial,sans-serif" font-size="18" fill="#d1d5db">Claude reads <tspan font-weight="700" fill="#34d399">41 lines</tspan> instead of 2,318 - and can still open the full log if it needs to.</text>
+</svg>

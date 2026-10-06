@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest an idea or a new use for Jev
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The situation where Claude wastes tokens (or something else jev could help with).
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like jev to do?
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (optional)
+      description: e.g. token counts, `jev eval` results, example output (redacted).

@@ -1,0 +1,8 @@
+{
+  "fit":   {"type": "noul", "instructions": "Is this a free, in-person AI or software engineering event in London?"},
+  "kind":  {"type": "choice", "instructions": "What kind of event is this?",
+            "criteria": {"talk": null, "workshop": null, "hackathon": null, "networking": null, "other": null}},
+  "depth": {"type": "score", "instructions": "How technical is the content?",
+            "criteria": ["No technical content", "Some technical talks for a general audience",
+                         "Hands-on or deeply technical, aimed at engineers"]}
+}

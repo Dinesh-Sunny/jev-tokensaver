@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="t d">
+  <title id="t">jev-tokensaver</title>
+  <desc id="d">Many lines of text are filtered down to the few that matter before they reach Claude.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="320" rx="24" fill="url(#bg)"/>
+  <!-- many lines in -->
+  <g opacity="0.55" fill="#94a3b8">
+    <rect x="70" y="70" width="190" height="8" rx="4"/><rect x="70" y="88" width="150" height="8" rx="4"/>
+    <rect x="70" y="106" width="210" height="8" rx="4"/><rect x="70" y="124" width="120" height="8" rx="4"/>
+    <rect x="70" y="142" width="180" height="8" rx="4"/><rect x="70" y="160" width="200" height="8" rx="4"/>
+    <rect x="70" y="178" width="140" height="8" rx="4"/><rect x="70" y="196" width="190" height="8" rx="4"/>
+    <rect x="70" y="214" width="160" height="8" rx="4"/><rect x="70" y="232" width="210" height="8" rx="4"/>
+  </g>
+  <rect x="70" y="142" width="180" height="8" rx="4" fill="#f87171"/>
+  <rect x="70" y="196" width="190" height="8" rx="4" fill="#34d399"/>
+  <!-- funnel -->
+  <path d="M300 70 L380 130 L380 182 L300 242 Z" fill="none" stroke="url(#accent)" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M392 156 L432 156" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M424 148 L434 156 L424 164" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- few lines out -->
+  <rect x="452" y="140" width="180" height="8" rx="4" fill="#f87171"/>
+  <rect x="452" y="160" width="190" height="8" rx="4" fill="#34d399"/>
+  <!-- text -->
+  <text x="700" y="140" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="58" font-weight="700" fill="#f8fafc">jev-tokensaver</text>
+  <text x="702" y="186" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="25" fill="#cbd5e1">Show Claude only what matters.</text>
+  <text x="702" y="226" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="17" fill="#a78bfa">prune · find · rank · map  ·  Claude Code + Cowork</text>
+</svg>

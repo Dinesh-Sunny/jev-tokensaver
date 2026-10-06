@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: tests (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v9
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+      - name: Offline test suite (TypeSafe API mocked)
+        run: uv run pytest
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v9
+      - name: ruff
+        run: uvx ruff check .
+      - name: Embedded skill + hook are in sync
+        run: python3 scripts/sync_assets.py && git diff --exit-code jev.py
+      - name: shellcheck
+        run: shellcheck -S warning install.sh hooks/alert-hook.sh
+
+  installer:
+    name: installer smoke test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v9
+      - name: Install the way users do (curl | bash style, no prompts)
+        run: |
+          mkdir -p ~/.claude
+          cat install.sh | JEV_SOURCE="$GITHUB_WORKSPACE" bash -s -- --yes --skip-check --no-desktop
+      - name: Verify, use, uninstall
+        run: |
+          export PATH="$(uv tool dir --bin):$PATH"
+          jev --version
+          jev doctor --offline || true
+          test -f ~/.claude/skills/jev/SKILL.md
+          grep -q alert-hook ~/.claude/settings.json
+          seq 1 300 | jev prune "anything unusual?"     # no key: must still print output (fail-open)
+          jev uninstall --yes --keep-cli
+          test ! -e ~/.claude/skills/jev
+          ! grep -q alert-hook ~/.claude/settings.json

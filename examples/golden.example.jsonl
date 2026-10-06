@@ -1,0 +1,5 @@
+{"find": "~/CodeProjects/myapp/src/billing/invoice.ts", "query": "where is VAT added to the invoice total?", "line": 212}
+{"find": "~/CodeProjects/myapp/src/billing/invoice.ts", "query": "where are refunds sent to Stripe?", "absent": true}
+{"find": "~/CodeProjects/myapp/logs/server.log", "query": "why did the payment webhook fail?", "line": 18432}
+{"rank": "~/CodeProjects/myapp", "pattern": "src/**/*.ts", "query": "where Stripe webhook signatures are verified", "file": "src/api/webhooks/stripe.ts"}
+{"rank": "~/CodeProjects/myapp", "pattern": "src/**/*.tsx", "query": "the component that renders the pricing table", "file": "src/components/PricingTable.tsx"}

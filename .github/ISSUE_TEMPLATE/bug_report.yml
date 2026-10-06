@@ -1,0 +1,40 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please run `jev doctor` first - it often points to the fix.
+        **Never paste your API key.** `jev doctor` only shows its last 4 characters.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you run, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `jev doctor --offline`
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: Where were you using it?
+      multiple: true
+      options: [Claude Code (CLI), Cowork / Claude Desktop (MCP), Terminal / scripts, Installer]
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS and version
+      placeholder: macOS 15.5 (arm64)
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else? (redact paths or content you don't want public)

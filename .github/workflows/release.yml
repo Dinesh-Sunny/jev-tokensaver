@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v9
+      - name: Tests
+        run: uv run pytest
+      - name: Tag matches the package version
+        run: |
+          v="v$(grep -m1 '^version' pyproject.toml | cut -d'"' -f2)"
+          test "$v" = "$GITHUB_REF_NAME" || { echo "pyproject version $v != tag $GITHUB_REF_NAME"; exit 1; }
+      - name: Build wheel + sdist, add installer and checksums
+        run: |
+          uv build
+          cp install.sh dist/
+          (cd dist && sha256sum * > SHA256SUMS)
+      - name: Release notes from CHANGELOG.md
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          awk -v v="$ver" '$0 ~ "^## \\[" v "\\]" {f=1; next} /^## \[/ {f=0} f' CHANGELOG.md > notes.md
+          printf '\n---\n**Install:** `curl -fsSL https://raw.githubusercontent.com/%s/main/install.sh | JEV_VERSION=%s bash`\n' \
+            "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" >> notes.md
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "jev-tokensaver $GITHUB_REF_NAME" --notes-file notes.md

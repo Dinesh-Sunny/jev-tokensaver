@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jev-tokensaver"
+version = "0.4.0"
+description = "Cut Claude Code & Cowork token use with TypeSafe Jev: prune long output, find the relevant lines, rank files - fail-open and secrets-scrubbed."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Dinesh Potluru" }]
+requires-python = ">=3.10"
+dependencies = ["typesafe-sdk>=0.7,<0.8", "mcp>=1.9,<2"]
+keywords = ["claude", "claude-code", "cowork", "mcp", "jev", "typesafe", "tokens", "context", "llm", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/Dinesh-Sunny/jev-tokensaver"
+Issues = "https://github.com/Dinesh-Sunny/jev-tokensaver/issues"
+Changelog = "https://github.com/Dinesh-Sunny/jev-tokensaver/blob/main/CHANGELOG.md"
+
+[project.scripts]
+jev = "jev:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["jev.py"]
+
+[tool.hatch.build.targets.sdist]
+include = ["jev.py", "README.md", "LICENSE", "CHANGELOG.md", "skills", "hooks", "tests", "examples"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = ["E702", "B008", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E731", "B023"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -p no:cacheprovider"
