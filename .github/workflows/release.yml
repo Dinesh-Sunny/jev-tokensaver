@@ -3,6 +3,8 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  release:
+    types: [published]
 
 permissions:
   contents: write
@@ -10,15 +12,21 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || github.ref_name }}
+    concurrency:
+      group: release-${{ github.event.release.tag_name || github.ref_name }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
       - uses: astral-sh/setup-uv@v10.2.0
       - name: Tests
         run: uv run pytest
       - name: Tag matches the package version
         run: |
           v="v$(grep -m1 '^version' pyproject.toml | cut -d'"' -f2)"
-          test "$v" = "$GITHUB_REF_NAME" || { echo "pyproject version $v != tag $GITHUB_REF_NAME"; exit 1; }
+          test "$v" = "$TAG" || { echo "pyproject version $v != tag $TAG"; exit 1; }
       - name: Build wheel + sdist, add installer and checksums
         run: |
           uv build
@@ -26,11 +34,17 @@ jobs:
           (cd dist && sha256sum * > SHA256SUMS)
       - name: Release notes from CHANGELOG.md
         run: |
-          ver="${GITHUB_REF_NAME#v}"
+          ver="${TAG#v}"
           awk -v v="$ver" '$0 ~ "^## \\[" v "\\]" {f=1; next} /^## \[/ {f=0} f' CHANGELOG.md > notes.md
           printf '\n---\n**Install:** `curl -fsSL https://raw.githubusercontent.com/%s/main/install.sh | JEV_VERSION=%s bash`\n' \
-            "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" >> notes.md
+            "$GITHUB_REPOSITORY" "$TAG" >> notes.md
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --title "jev-tokensaver $GITHUB_REF_NAME" --notes-file notes.md
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" --title "jev-tokensaver $TAG" --notes-file notes.md
+            gh release upload "$TAG" dist/* --clobber
+          else
+            gh release create "$TAG" dist/* --title "jev-tokensaver $TAG" --notes-file notes.md
+          fi
