@@ -11,7 +11,7 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Dinesh Potluru" }]
 requires-python = ">=3.10"
-dependencies = ["typesafe-sdk>=0.7,<0.8", "mcp>=1.9,<2"]
+dependencies = ["typesafe-sdk>=0.7,<0.8", "mcp>=1.9,<3"]
 keywords = ["claude", "claude-code", "cowork", "mcp", "jev", "typesafe", "tokens", "context", "llm", "cli"]
 classifiers = [
     "Development Status :: 4 - Beta",
