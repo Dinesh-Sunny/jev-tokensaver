@@ -24,7 +24,7 @@ jobs:
         python: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v9
+      - uses: astral-sh/setup-uv@v10.2.0
         with:
           python-version: ${{ matrix.python }}
           enable-cache: true
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v9
+      - uses: astral-sh/setup-uv@v10.2.0
       - name: ruff
         run: uvx ruff check .
       - name: Embedded skill + hook are in sync
@@ -52,7 +52,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v9
+      - uses: astral-sh/setup-uv@v10.2.0
       - name: Install the way users do (curl | bash style, no prompts)
         run: |
           mkdir -p ~/.claude
