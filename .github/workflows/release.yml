@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.release.tag_name || github.ref }}
-      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: astral-sh/setup-uv@v10.3.2
       - name: Tests
         run: uv run pytest
       - name: Tag matches the package version
